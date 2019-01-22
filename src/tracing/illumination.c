@@ -49,14 +49,7 @@ static void		ft_check_coll(t_parg *parg, t_coll *coll, t_light *l)
 	if (cos[0] >= 0 && !ft_iscollide(parg->e->scn, coll->coll_pnt,
 		ft_3_unitvectornew(coll->coll_pnt, l->origin), l->origin))
 	{
-		cos[1] = ft_3_vector_cos(coll->spclr_vec,
-			ft_3_vectornew(coll->coll_pnt, l->origin));
-		cl_len = ft_3_point_point_dist(coll->coll_pnt, l->origin);
-		coll->illum += (!cl_len) ? l->bright :
-			l->bright * cos[0] / (pow(cl_len / BRIGHT_UNIT, 2));
-		if (cos[1] > 0.9)
-			coll->phong = MAX(coll->phong, pow(cos[1] - 0.9, 2) *
-				coll->o->phong * 100.0 * 255.0);
+		
 	}
 }
 

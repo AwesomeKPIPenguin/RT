@@ -19,14 +19,29 @@ t_light		*ft_lightnew(void)
 	light = ft_smemalloc(sizeof(t_light), "ft_lightnew");
 	light->bright = 0.15;
 	light->origin = ft_3_pointnew(0.0, 10000.0, 0.0);
+	light->type = POINT;
 	return (light);
+}
+
+t_ltype		ft_get_light_type(char *type)
+{
+	t_ltype		res;
+
+	res = POINT;
+	if (!ft_strcmp(type, "direct"))
+		res = DIRECT;
+	if (!ft_strcmp(type, "parallel"))
+		res = PARALLEL;
+	return (res);
 }
 
 char		*ft_parse_light(char *attr, t_scene *scn)
 {
 	char			*ptr;
+	char 			*ltype_str;
 	t_light			*light;
 
+	ltype_str = NULL;
 	attr = ft_get_curve(attr, '{');
 	if (!*attr)
 		ft_error("invalid scene file");
@@ -36,5 +51,10 @@ char		*ft_parse_light(char *attr, t_scene *scn)
 		ft_read_attr((void *)&(light->origin), ptr, PNT);
 	if ((ptr = ft_search_attr(attr, "bright:", FTSA_IN_SCOPE)))
 		ft_read_attr((void *)&(light->bright), ptr, KOEF);
+	if ((ptr = ft_search_attr(attr, "type:", FTSA_IN_SCOPE)))
+	{
+		ft_read_attr((void *)&(ltype_str), ptr, STR);
+		light->type = ft_get_light_type(ltype_str);
+	}
 	return (ft_get_curve(attr, '}'));
 }

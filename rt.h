@@ -78,8 +78,16 @@ typedef struct			s_img
 	int					endian;
 }						t_img;
 
+typedef enum			e_ltype
+{
+	POINT,
+	DIRECT,
+	PARALLEL
+}						t_ltype;
+
 typedef struct			s_light
 {
+	t_ltype				type;
 	t_color				color;
 	double				bright;
 	t_point3			origin;
@@ -329,6 +337,13 @@ t_color					ft_sum_colors
 */
 
 void					ft_illuminate(t_parg *parg, t_coll *coll);
+
+/*
+**	illumination_utils.c
+*/
+
+void					ft_illuminate_point
+							(t_coll *coll, t_light *l, double cos_0);
 
 /*
 **	collision.c
