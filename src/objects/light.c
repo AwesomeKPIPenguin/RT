@@ -20,6 +20,7 @@ t_light		*ft_lightnew(void)
 	light->bright = 0.15;
 	light->origin = ft_3_pointnew(0.0, 10000.0, 0.0);
 	light->type = POINT;
+	light->color.val = 0XFFFFFF;
 	return (light);
 }
 
@@ -47,10 +48,10 @@ char		*ft_parse_light(char *attr, t_scene *scn)
 		ft_error("invalid scene file");
 	light = ft_lightnew();
 	ft_lstpush(&(scn->lights), ft_nodenew((void *)light, sizeof(t_light)));
-	if ((ptr = ft_search_attr(attr, "origin:", FTSA_IN_SCOPE)))
-		ft_read_attr((void *)&(light->origin), ptr, PNT);
-	if ((ptr = ft_search_attr(attr, "bright:", FTSA_IN_SCOPE)))
-		ft_read_attr((void *)&(light->bright), ptr, KOEF);
+	ft_get_attr_in_scope(attr, "origin:", (void *)&(light->origin), PNT);
+	ft_get_attr_in_scope(attr, "direct:", (void *)&(light->direct), PNT);
+	ft_get_attr_in_scope(attr, "bright:", (void *)&(light->direct), KOEF);
+	ft_get_attr_in_scope(attr, "color:", (void *)&(light->direct), COLOR);
 	if ((ptr = ft_search_attr(attr, "type:", FTSA_IN_SCOPE)))
 	{
 		ft_read_attr((void *)&(ltype_str), ptr, STR);

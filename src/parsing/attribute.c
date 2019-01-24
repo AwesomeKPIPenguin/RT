@@ -94,10 +94,10 @@ void		ft_read_attr(void *dst, char *attr, int type)
 	free(data);
 }
 
-void		ft_get_attr_in_scope(char *start, char *name, void *where, int what)
+void		ft_get_attr_in_scope(char *start, char *name, void *dst, int type)
 {
 	char	*ptr;
 
 	if ((ptr = ft_search_attr(start, name, FTSA_IN_SCOPE)))
-		ft_read_attr(where, ptr, what);
+		ft_read_attr(dst, ptr, type);
 }

@@ -243,7 +243,7 @@ char					*ft_search_attr
 							(char *content, char *attr, int ftsa_mode);
 void					ft_read_attr(void *dst, char *attr, int type);
 void					ft_get_attr_in_scope
-							(char *start, char *name, void *where, int what);
+							(char *start, char *name, void *dst, int type);
 
 /*
 **	light.c
