@@ -185,6 +185,7 @@ typedef struct			s_cone
 
 typedef struct			s_collision
 {
+	t_color				illum_color;
 	double				illum;
 	double				phong;
 	t_object			*o;
