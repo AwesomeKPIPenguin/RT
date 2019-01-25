@@ -48,15 +48,26 @@ void	ft_affect_illumination
 {
 	double		phong_cos;
 	double		cl_len;
+	int 		i;
+	t_byte		color_part;
+	double		bright_koef;
 
 	phong_cos = ft_3_vector_cos(coll->spclr_vec, ldir);
 	cl_len = (l->type == POINT) ?
 		ft_3_point_point_dist(coll->coll_pnt, l->origin) : 1.0;
-	coll->illum += (!cl_len) ? l->bright :
+	bright_koef = (!cl_len) ? l->bright :
 		l->bright * norm_light_cos / (pow(cl_len / BRIGHT_UNIT, 2));
+	i = -1;
+	while (++i < 3)
+	{
+		color_part = (t_byte)ft_limit(0, 255,
+			(int)(bright_koef * l->color.argb[i]));
+		coll->illum_color.argb[i] =
+			(255 - coll->illum_color.argb[i] < color_part) ? (t_byte)(255) :
+				coll->illum_color.argb[i] + color_part;
+	}
 	if (phong_cos > 0.9)
-		coll->phong = MAX(coll->phong, pow(phong_cos - 0.9, 2) *
-			coll->o->phong * 100.0 * 255.0);
+		coll->phong = pow(phong_cos - 0.9, 2) * coll->o->phong * 100.0;
 }
 
 void	ft_illuminate_with(t_parg *parg, t_coll *coll, t_light *l)
@@ -78,8 +89,8 @@ void	ft_illuminate(t_parg *parg, t_coll *coll)
 	t_list		*node;
 	t_light		*l;
 
-	coll->illum = 0.0;
-	coll->phong = 127.0;
+	coll->illum_color.val = 0;
+	coll->phong = 0.0;
 	node = parg->e->scn->lights;
 	while (node)
 	{
@@ -87,5 +98,4 @@ void	ft_illuminate(t_parg *parg, t_coll *coll)
 		ft_illuminate_with(parg, coll, l);
 		node = node->next;
 	}
-	coll->illum = ft_limitf(0.0, 1.0, coll->illum);
 }

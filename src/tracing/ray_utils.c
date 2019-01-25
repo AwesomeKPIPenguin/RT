@@ -45,15 +45,19 @@ t_color			ft_sum_colors(t_coll coll, t_color color_s, t_color color_t)
 	t_color		res;
 	t_object	*o;
 	int			i;
+	double		illum;
 
 	res.val = 0;
 	o = coll.o;
 	i = -1;
 	while (++i < 3)
-		res.argb[i] = (t_byte)((double)o->color.argb[i] * o->diff *
-				((double)(coll.illum_color.argb[i]) *
-					(ft_limitf(0.0, 1.0, coll.illum + o->ambnt)) / 255.0) +
+	{
+		illum = ft_limitf(0.0, 1.0,
+			o->ambnt + (double)(coll.illum_color.argb[i]) / 255.0);
+		res.argb[i] = (t_byte)(
+			(double)(o->color.argb[i]) * illum * o->diff +
 			(double)(color_s.argb[i]) * o->spclr +
 			(double)(color_t.argb[i]) * o->trans);
+	}
 	return (res);
 }

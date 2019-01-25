@@ -186,7 +186,6 @@ typedef struct			s_cone
 typedef struct			s_collision
 {
 	t_color				illum_color;
-	double				illum;
 	double				phong;
 	t_object			*o;
 	t_point3			coll_pnt;
@@ -340,13 +339,6 @@ t_color					ft_sum_colors
 void					ft_illuminate(t_parg *parg, t_coll *coll);
 
 /*
-**	illumination_utils.c
-*/
-
-void					ft_illuminate_point
-							(t_coll *coll, t_light *l, double cos_0);
-
-/*
 **	collision.c
 */
 
@@ -357,7 +349,8 @@ t_coll					ft_get_collision
 **	utils.c
 */
 
-t_color					ft_apply_a(t_color color, double bright);
+t_color					ft_apply_phong
+							(t_color color, double bright, t_color light_color);
 
 /*
 **	key_hooks.c

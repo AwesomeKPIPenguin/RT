@@ -35,7 +35,7 @@ static t_color	ft_throw_ray(t_parg *parg, t_point3 od[2], int depth)
 			ft_throw_ray(parg, od, depth + 1);
 	}
 	return ((coll.o->phong != 0.0) ?
-		ft_apply_a(ft_sum_colors(coll, spclr_col, trans_col), coll.phong) :
+		ft_apply_phong(ft_sum_colors(coll, spclr_col, trans_col), coll.phong, ) :
 		ft_sum_colors(coll, spclr_col, trans_col));
 }
 

@@ -12,17 +12,13 @@
 
 #include "rt.h"
 
-t_color		ft_apply_a(t_color color, double bright)
+t_color		ft_apply_phong(t_color color, double phong, t_color light_color)
 {
-	double	k;
-
-	bright = ft_limitf(0.0, 255.0, bright);
-	k = bright - 127.0;
-	color.argb[2] += (double)((k > 0) ? 255 - color.argb[2] : color.argb[2]) /
-		128.0 * k;
-	color.argb[1] += (double)((k > 0) ? 255 - color.argb[1] : color.argb[1]) /
-		128.0 * k;
-	color.argb[0] += (double)((k > 0) ? 255 - color.argb[0] : color.argb[0]) /
-		128.0 * k;
+	color.argb[2] += (t_byte)((255.0 - color.argb[2]) * phong *
+		((double)light_color.argb[2] / 255.0));
+	color.argb[1] += (t_byte)((255.0 - color.argb[1]) * phong *
+		((double)light_color.argb[1] / 255.0));
+	color.argb[0] += (t_byte)((255.0 - color.argb[0]) * phong *
+		((double)light_color.argb[0] / 255.0));
 	return (color);
 }
