@@ -186,6 +186,7 @@ typedef struct			s_cone
 typedef struct			s_collision
 {
 	t_color				illum_color;
+	t_color				phong_color;
 	double				phong;
 	t_object			*o;
 	t_point3			coll_pnt;
@@ -351,6 +352,8 @@ t_coll					ft_get_collision
 
 t_color					ft_apply_phong
 							(t_color color, double bright, t_color light_color);
+t_color					ft_scale_color(t_color color, double k);
+t_color					ft_add_colors(t_color c1, t_color c2);
 
 /*
 **	key_hooks.c

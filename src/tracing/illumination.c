@@ -43,6 +43,16 @@ int		ft_iscollide
 	return (0);
 }
 
+void	ft_affect_phong(t_coll *coll, t_light *l, double phong_cos)
+{
+	if (phong_cos > 0.9)
+	{
+		coll->phong = pow(phong_cos - 0.9, 2) * coll->o->phong * 100.0;
+		coll->phong_color = ft_add_colors(coll->phong_color,
+			ft_scale_color(l->color, coll->phong));
+	}
+}
+
 void	ft_affect_illumination
 			(t_coll *coll, t_light *l, t_point3 ldir, double norm_light_cos)
 {
@@ -66,8 +76,7 @@ void	ft_affect_illumination
 			(255 - coll->illum_color.argb[i] < color_part) ? (t_byte)(255) :
 				coll->illum_color.argb[i] + color_part;
 	}
-	if (phong_cos > 0.9)
-		coll->phong = pow(phong_cos - 0.9, 2) * coll->o->phong * 100.0;
+	ft_affect_phong(coll, l, phong_cos);
 }
 
 void	ft_illuminate_with(t_parg *parg, t_coll *coll, t_light *l)
@@ -90,6 +99,7 @@ void	ft_illuminate(t_parg *parg, t_coll *coll)
 	t_light		*l;
 
 	coll->illum_color.val = 0;
+	coll->phong_color.val = 0;
 	coll->phong = 0.0;
 	node = parg->e->scn->lights;
 	while (node)
