@@ -64,7 +64,7 @@ void	ft_affect_illumination
 
 	phong_cos = ft_3_vector_cos(coll->spclr_vec, ldir);
 	cl_len = (l->type == POINT) ?
-		ft_3_point_point_dist(coll->coll_pnt, l->origin) : 1.0;
+		ft_3_point_point_dist(coll->coll_pnt, l->origin) : 10000.0;
 	bright_koef = (!cl_len) ? l->bright :
 		l->bright * norm_light_cos / (pow(cl_len / BRIGHT_UNIT, 2));
 	i = -1;
@@ -85,8 +85,7 @@ void	ft_illuminate_with(t_parg *parg, t_coll *coll, t_light *l)
 	t_point3	ldir;
 
 	ldir = (l->type == POINT) ? ft_3_vectornew(coll->coll_pnt, l->origin) :
-		ft_3_unitvectornew(coll->coll_pnt,
-			ft_3_vector_scale(l->direct, -1.0));
+		ft_3_vector_scale(l->direct, -1.0);
 	norm_light_cos = ft_3_vector_cos(coll->norm, ldir);
 	if (norm_light_cos >= 0 &&
 		!ft_iscollide(parg->e->scn, coll->coll_pnt, ldir, l))

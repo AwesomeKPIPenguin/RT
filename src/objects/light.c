@@ -50,8 +50,8 @@ char		*ft_parse_light(char *attr, t_scene *scn)
 	ft_lstpush(&(scn->lights), ft_nodenew((void *)light, sizeof(t_light)));
 	ft_get_attr_in_scope(attr, "origin:", (void *)&(light->origin), PNT);
 	ft_get_attr_in_scope(attr, "direct:", (void *)&(light->direct), PNT);
-	ft_get_attr_in_scope(attr, "bright:", (void *)&(light->direct), KOEF);
-	ft_get_attr_in_scope(attr, "color:", (void *)&(light->direct), COLOR);
+	ft_get_attr_in_scope(attr, "bright:", (void *)&(light->bright), KOEF);
+	ft_get_attr_in_scope(attr, "color:", (void *)&(light->color), COLOR);
 	if ((ptr = ft_search_attr(attr, "type:", FTSA_IN_SCOPE)))
 	{
 		ft_read_attr((void *)&(ltype_str), ptr, STR);
