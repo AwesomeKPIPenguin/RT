@@ -24,23 +24,21 @@ t_camera	*ft_cameranew(void)
 
 char		*ft_parse_camera(char *attr, t_scene *scn)
 {
-	char	*ptr;
-
 	attr = ft_get_curve(attr, '{');
-	if ((ptr = ft_search_attr(attr, "origin:", FTSA_IN_SCOPE)))
-		ft_read_attr((void *)&(scn->cam->origin), ptr, PNT);
-	if ((ptr = ft_search_attr(attr, "alpha:", FTSA_IN_SCOPE)))
-		ft_read_attr((void *)&(scn->cam->alpha), ptr, DBL);
-	if ((ptr = ft_search_attr(attr, "beta:", FTSA_IN_SCOPE)))
-		ft_read_attr((void *)&(scn->cam->beta), ptr, DBL);
-	if ((ptr = ft_search_attr(attr, "gamma:", FTSA_IN_SCOPE)))
-		ft_read_attr((void *)&(scn->cam->gamma), ptr, DBL);
-	if ((ptr = ft_search_attr(attr, "fov:", FTSA_IN_SCOPE)))
-		ft_read_attr((void *)&(scn->cam->fov), ptr, DBL);
+	ft_get_attr_in_scope(attr, "origin:", (void *)&(scn->cam->origin), PNT);
+	ft_get_attr_in_scope(attr, "alpha:", (void *)&(scn->cam->alpha), DBL);
+	ft_get_attr_in_scope(attr, "beta:", (void *)&(scn->cam->beta), DBL);
+	ft_get_attr_in_scope(attr, "gamma:", (void *)&(scn->cam->gamma), DBL);
+	ft_get_attr_in_scope(attr, "fov:", (void *)&(scn->cam->fov), DBL);
 	scn->cam->fov = ft_limitf(FOV_MIN, FOV_MAX, scn->cam->fov);
 	scn->cam->fov = ft_torad(scn->cam->fov);
 	scn->cam->alpha = ft_torad(scn->cam->alpha);
 	scn->cam->beta = ft_torad(scn->cam->beta);
 	scn->cam->gamma = ft_torad(scn->cam->gamma);
 	return (ft_get_curve(attr, '}'));
+}
+
+void		ft_get_camera_refr(t_scene *scn)
+{
+
 }

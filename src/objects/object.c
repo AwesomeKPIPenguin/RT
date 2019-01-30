@@ -21,6 +21,7 @@ t_object	*ft_objectnew(void)
 	obj->ambnt = 0.1;
 	obj->diff = 1.0;
 	obj->phong = 0;
+	obj->refr = 1.0;
 	return (obj);
 }
 
@@ -48,6 +49,9 @@ t_object	*ft_parse_object(char *attr)
 	ft_get_attr_in_scope(attr, "diff:", (void *)(&(o->diff)), KOEF);
 	ft_get_attr_in_scope(attr, "spclr:", (void *)(&(o->spclr)), KOEF);
 	ft_get_attr_in_scope(attr, "s_blur:", (void *)(&(o->s_blur)), KOEF);
+	ft_get_attr_in_scope(attr, "refr:", (void *)(&(o->refr)), KOEF);
+	ft_get_attr_in_scope(attr, "trans:", (void *)(&(o->trans)), KOEF);
+	ft_get_attr_in_scope(attr, "t_blur:", (void *)(&(o->t_blur)), KOEF);
 	ft_get_attr_in_scope(attr, "phong:", (void *)(&(o->phong)), KOEF);
 	ft_get_attr_in_scope(attr, "translate:", (void *)(&(o->translate)), PNT);
 	ft_get_attr_in_scope(attr, "rotate:", (void *)(&(o->rotate)), PNT);

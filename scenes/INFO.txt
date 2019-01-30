@@ -19,8 +19,13 @@ camera {
 }
 
 light {
+    type: direct;					# default: point; (point and direct)
+    color: 0xffffff;				# default: 0xffffff
 	bright: 0.25;					# default: 0.15 (0.0 - 1.0, excluding 0)
 	origin: (0, 10000, 0);			# default: (0, 10000, 0)
+									#	valid only for point type
+	direct: (0, -1, 0);				# default: (0, -1, 0)
+									#	valid only for direct type
 }
 
 #

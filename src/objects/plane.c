@@ -22,30 +22,6 @@ t_plane		*ft_planenew(void)
 	return (pln);
 }
 
-int			ft_is_reachable_plane(void *fig, t_point3 origin, t_point3 direct)
-{
-	(void)fig;
-	(void)origin;
-	(void)direct;
-	return (1);
-}
-
-t_point3	ft_collide_plane(void *fig, t_point3 origin, t_point3 direct)
-{
-	t_plane		*pln;
-	t_point3	coll;
-
-	pln = (t_plane *)fig;
-	coll = ft_3_line_plane_inter(pln->origin, pln->norm, origin, direct);
-	return ((!ft_3_pointcmp(ft_3_unitvectornew(origin, coll), direct, 1e-6)) ?
-			ft_3_nullpointnew() : coll);
-}
-
-t_point3	ft_get_norm_plane(void *fig, t_point3 coll)
-{
-	(void)coll;
-	return (((t_plane *)fig)->norm);
-}
 
 char		*ft_parse_plane(char *attr, t_scene *scn)
 {
@@ -53,8 +29,10 @@ char		*ft_parse_plane(char *attr, t_scene *scn)
 	t_plane		*pln;
 
 	obj = ft_parse_object(attr);
+	obj->refr = 1.0;
 	obj->ft_collide = ft_collide_plane;
 	obj->ft_is_reachable = ft_is_reachable_plane;
+	obj->ft_is_inside = ft_is_inside_plane;
 	obj->ft_get_norm = ft_get_norm_plane;
 	pln = ft_planenew();
 	attr = ft_get_curve(attr, '{');

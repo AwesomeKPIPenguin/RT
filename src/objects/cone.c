@@ -24,6 +24,22 @@ t_cone		*ft_conenew(void)
 	return (cone);
 }
 
+void		ft_cone_init(t_object *obj, t_cone *cone)
+{
+	obj->fig = cone;
+	cone->bv_dist = ft_3_point_point_dist(cone->base, cone->vert);
+	cone->base = ft_3_add_vector(cone->base, obj->translate);
+	cone->vert = ft_3_add_vector(cone->vert, obj->translate);
+	cone->bv = ft_3_rotate_vector(ft_3_unitvectornew(cone->base, cone->vert),
+		obj->rotate.x, obj->rotate.y, obj->rotate.z);
+	cone->vert = ft_3_add_vector(cone->base,
+		ft_3_vector_scale(cone->bv, cone->bv_dist));
+	cone->side_norm_angle = acos((cone->bv_dist * sin(atan((cone->base_rad -
+		cone->vert_rad) / cone->bv_dist))) / (cone->base_rad - cone->vert_rad));
+	cone->main_vert = ft_3_add_vector(cone->base, ft_3_vector_scale(cone->bv,
+		cone->base_rad * cone->bv_dist / (cone->base_rad - cone->vert_rad)));
+}
+
 char		*ft_parse_cone(char *attr, t_scene *scn)
 {
 	t_object	*obj;
@@ -31,7 +47,8 @@ char		*ft_parse_cone(char *attr, t_scene *scn)
 
 	obj = ft_parse_object(attr);
 	obj->ft_collide = ft_collide_cone;
-	obj->ft_is_reachable = ft_is_reachable_cone;
+	obj->ft_is_reachable = ft_is_reachable_plane;
+	obj->ft_is_inside = ft_is_inside_cone;
 	obj->ft_get_norm = ft_get_norm_cone;
 	cone = ft_conenew();
 	attr = ft_get_curve(attr, '{');
@@ -49,45 +66,3 @@ char		*ft_parse_cone(char *attr, t_scene *scn)
 	return (ft_get_curve(attr, '}'));
 }
 
-int			ft_is_reachable_cone(void *fig, t_point3 origin, t_point3 direct)
-{
-	(void)fig;
-	(void)origin;
-	(void)direct;
-	return (1);
-}
-
-t_point3	ft_collide_cone(void *fig, t_point3 origin, t_point3 direct)
-{
-	t_cone		*cone;
-	t_point3	pnt[4];
-
-	cone = (t_cone *)fig;
-	pnt[0] = origin;
-	pnt[1] = direct;
-	ft_get_coll_pnts(cone, &pnt, cone->base_rad == cone->vert_rad);
-	ft_is_between_planes(&pnt, cone->base, cone->vert);
-	ft_collide_cone_planes(cone, origin, direct, &pnt);
-	return (ft_get_closest(origin, pnt));
-}
-
-t_point3	ft_get_norm_cone(void *fig, t_point3 coll)
-{
-	t_cone		*cone;
-	t_point3	proj;
-	double		sign;
-
-	cone = (t_cone *)fig;
-	proj = ft_3_line_point_proj(cone->base, cone->bv, coll);
-	if (ft_3_pointcmp(proj, cone->base, 1e-3))
-		return (ft_3_vector_scale(cone->bv, -1));
-	if (ft_3_pointcmp(proj, cone->vert, 1e-3))
-		return (cone->bv);
-	if (cone->base_rad == cone->vert_rad)
-		return (ft_3_unitvectornew(proj, coll));
-	sign = (cone->base_rad > cone->vert_rad) ? 1.0 : -1.0;
-	sign *= (ft_3_vector_cos(ft_3_vectornew(cone->main_vert, cone->base),
-		ft_3_vectornew(cone->main_vert, proj)) < 0) ? -1.0 : 1.0;
-	return (ft_3_tounitvector(ft_3_turn_vector(cone->bv,
-		ft_3_unitvectornew(proj, coll), sign * cone->side_norm_angle)));
-}

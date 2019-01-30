@@ -100,6 +100,7 @@ typedef struct			s_camera
 	double				beta;
 	double				gamma;
 	double				fov;
+	double				start_refr;
 	t_point3			origin;
 	t_point3			direct;
 	t_point3			vs_start_point;
@@ -142,14 +143,21 @@ typedef struct			s_object
 	double				diff;
 	double				spclr;
 	double				s_blur;
+	double				refr;
 	double				trans;
 	double				t_blur;
 	double				phong;
+
+/*
+**	figure, one of the objects, listed bellow
+*/
 	void				*fig;
+
 	int					(*ft_is_reachable)
 							(void *fig, t_point3 origin, t_point3 direct);
 	t_point3			(*ft_collide)
 							(void *fig, t_point3 origin, t_point3 direct);
+	int					(*ft_is_inside)(void *fig, t_point3 point);
 	t_point3			(*ft_get_norm)(void *fig, t_point3 coll);
 	t_point3			translate;
 	t_point3			rotate;
@@ -264,12 +272,17 @@ t_object				*ft_parse_object(char *attr);
 **	plane.c
 */
 
-t_plane					*ft_planenew(void);
 char					*ft_parse_plane(char *attr, t_scene *scn);
+
+/*
+**	plane_utils.c
+*/
+
 int						ft_is_reachable_plane
 							(void *fig, t_point3 origin, t_point3 direct);
 t_point3				ft_collide_plane
 							(void *fig, t_point3 origin, t_point3 direct);
+int						ft_is_inside_plane(void *fig, t_point3 point);
 t_point3				ft_get_norm_plane(void *fig, t_point3 coll);
 
 /*
@@ -277,10 +290,16 @@ t_point3				ft_get_norm_plane(void *fig, t_point3 coll);
 */
 
 char					*ft_parse_sphere(char *attr, t_scene *scn);
+
+/*
+**	sphere_utils.c
+*/
+
 int						ft_is_reachable_sphere
 							(void *fig, t_point3 origin, t_point3 direct);
 t_point3				ft_collide_sphere
 							(void *fig, t_point3 origin, t_point3 direct);
+int						ft_is_inside_sphere(void *fig, t_point3 point);
 t_point3				ft_get_norm_sphere(void *fig, t_point3 coll);
 
 /*
@@ -288,31 +307,30 @@ t_point3				ft_get_norm_sphere(void *fig, t_point3 coll);
 */
 
 char					*ft_parse_cone(char *attr, t_scene *scn);
-int						ft_is_reachable_cone
-							(void *fig, t_point3 origin, t_point3 direct);
-t_point3				ft_collide_cone
-							(void *fig, t_point3 origin, t_point3 direct);
-t_point3				ft_get_norm_cone(void *fig, t_point3 coll);
 
 /*
 **	cone_utils.c
 */
 
+t_point3				ft_collide_cone
+							(void *fig, t_point3 origin, t_point3 direct);
+int						ft_is_inside_cone(void *fig, t_point3 point);
+t_point3				ft_get_norm_cone(void *fig, t_point3 coll);
 void					ft_get_coll_pnts
 							(t_cone *cone, t_point3 (*pnt)[4], int is_cyl);
-void					ft_is_between_planes
-							(t_point3 (*pnt)[4], t_point3 base, t_point3 vert);
-void					ft_collide_cone_planes
-							(t_cone *cone, t_point3 origin,
-							t_point3 direct, t_point3 (*pnt)[4]);
-t_point3				ft_get_closest(t_point3 cam, t_point3 pnt[4]);
 
 /*
 **	cone_utils_2.c
 */
 
 void					ft_set_coll_pnts_null(t_point3 *pnt1, t_point3 *pnt2);
-void					ft_cone_init(t_object *obj, t_cone *cone);
+void					ft_get_coll_pnts_cyl(t_cone *cone, t_point3 (*pnt)[4]);
+void					ft_is_between_planes
+							(t_point3 (*pnt)[4], t_point3 base, t_point3 vert);
+void					ft_collide_cone_planes
+							(t_cone *cone, t_point3 origin,
+							t_point3 direct, t_point3 (*pnt)[4]);
+t_point3				ft_get_closest(t_point3 cam, t_point3 pnt[4]);
 
 /*
 **	ray.c
@@ -344,7 +362,8 @@ void					ft_illuminate(t_parg *parg, t_coll *coll);
 */
 
 t_coll					ft_get_collision
-							(t_parg *parg, t_point3 origin, t_point3 direct);
+							(t_parg *parg, t_point3 origin,
+							t_point3 direct, double refr);
 
 /*
 **	utils.c

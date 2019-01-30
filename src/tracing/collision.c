@@ -40,7 +40,7 @@ static t_point3		ft_get_collision_point
 }
 
 t_coll				ft_get_collision
-	(t_parg *parg, t_point3 origin, t_point3 direct)
+	(t_parg *parg, t_point3 origin, t_point3 direct, double refr)
 {
 	t_coll		coll;
 	t_point3	od[2];
@@ -56,6 +56,8 @@ t_coll				ft_get_collision
 		coll.norm = ft_3_vector_scale(coll.norm, -1);
 	if (coll.o->spclr)
 		coll.spclr_vec = ft_3_reflect_vector(origin, coll.coll_pnt, coll.norm);
+	if (coll.o->trans)
+		coll.trans_vec = ft_3_refract_vector(coll, direct, refr);
 	ft_illuminate(parg, &coll);
 	return (coll);
 }
