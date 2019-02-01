@@ -12,12 +12,14 @@
 
 #include "libpnt.h"
 
-double		ft_3_line_line_dist
+float		ft_3_line_line_dist
 	(t_point3 o1, t_point3 d1, t_point3 o2, t_point3 d2)
 {
 	t_point3	axb;
 
 	axb = ft_3_vector_cross(d1, d2);
-	return (fabs(ft_3_vector_dot(ft_3_add_vector(o2, ft_3_vector_scale(o1, -1)),
-		axb)) / ft_3_vector_len(axb));
+	return ((float)fabs(
+		ft_3_vector_dot(
+			ft_3_vector_add(o2, ft_3_vector_scale(o1, -1)), axb)) /
+		ft_3_vector_len(axb));
 }

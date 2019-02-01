@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-unsigned int	ft_dlstlen(t_dlist **head)
+int		ft_dlstlen(t_dlist **head)
 {
-	unsigned int	i;
-	t_dlist			*lst;
+	int			i;
+	t_dlist		*lst;
 
 	i = 1;
 	if (!head || !*head)
@@ -23,7 +23,7 @@ unsigned int	ft_dlstlen(t_dlist **head)
 	lst = *head;
 	while (lst->next)
 	{
-		i++;
+		++i;
 		lst = lst->next;
 	}
 	return (i);

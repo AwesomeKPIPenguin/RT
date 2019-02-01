@@ -15,14 +15,14 @@
 t_point3	ft_3_line_line_inter
 	(t_point3 o1, t_point3 d1, t_point3 o2, t_point3 d2)
 {
-	double		t;
-	double		len;
+	float		t;
+	float		len;
 	t_point3	den;
 
 	den = ft_3_vector_cross(d1, d2);
 	if ((len = ft_3_vector_len(den)) == 0.0)
 		return (ft_3_nullpointnew());
-	t = ft_3_vector_dot(ft_3_vector_cross(ft_3_vectornew(o1, o2), d2), den) /
-		pow(len, 2);
-	return (ft_3_add_vector(o1, ft_3_vector_scale(d1, t)));
+	t = ft_3_vector_dot(
+		ft_3_vector_cross(ft_3_vectornew(o1, o2), d2), den) /pow(len, 2);
+	return (ft_3_vector_add(o1, ft_3_vector_scale(d1, t)));
 }

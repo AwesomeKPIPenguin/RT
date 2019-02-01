@@ -35,9 +35,9 @@ char		*ft_parse_sphere(char *attr, t_scene *scn)
 	sph = ft_spherenew();
 	attr = ft_get_curve(attr, '{');
 	ft_get_attr_in_scope(attr, "origin:", (void *)(&(sph->origin)), PNT);
-	ft_get_attr_in_scope(attr, "radius:", (void *)(&(sph->radius)), DBL);
+	ft_get_attr_in_scope(attr, "radius:", (void *)(&(sph->radius)), FLT);
 	sph->radius = ft_limitf(0.0, DBL_MAX, sph->radius);
-	sph->origin = ft_3_add_vector(sph->origin, obj->translate);
+	sph->origin = ft_3_vector_add(sph->origin, obj->translate);
 	obj->fig = sph;
 	ft_lstpush(&(scn->objs), ft_nodenew((void *)obj, sizeof(obj)));
 	return (ft_get_curve(attr, '}'));

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_3_turn_vector_near.c                            :+:      :+:    :+:   */
+/*   ft_3_vector_turn_near.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: domelche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,15 +12,19 @@
 
 #include "libpnt.h"
 
-t_point3		ft_3_turn_vector_near(t_point3 vec, t_point3 axis, double angle)
+/*
+**	turn vec towards axis on angle
+*/
+
+t_point3		ft_3_vector_turn_near(t_point3 vec, t_point3 axis, float angle)
 {
 	t_point3	rotated;
-	double		sin_a;
-	double		cos_a;
-	double		va;
+	float		sin_a;
+	float		cos_a;
+	float		va;
 
-	sin_a = sin(angle);
-	cos_a = cos(angle);
+	sin_a = (float)sin(angle);
+	cos_a = (float)cos(angle);
 	va = 1 - cos_a;
 	rotated.x = vec.x * (axis.x * axis.x * va + cos_a) +
 				vec.y * (axis.x * axis.y * va - axis.z * sin_a) +

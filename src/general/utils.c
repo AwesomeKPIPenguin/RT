@@ -12,22 +12,22 @@
 
 #include "rt.h"
 
-t_color		ft_apply_phong(t_color color, double phong, t_color light_color)
+t_color		ft_apply_phong(t_color color, float phong, t_color light_color)
 {
 	color.argb[2] += (t_byte)((255.0 - color.argb[2]) * phong *
-		((double)light_color.argb[2] / 255.0));
+		((float)light_color.argb[2] / 255.0));
 	color.argb[1] += (t_byte)((255.0 - color.argb[1]) * phong *
-		((double)light_color.argb[1] / 255.0));
+		((float)light_color.argb[1] / 255.0));
 	color.argb[0] += (t_byte)((255.0 - color.argb[0]) * phong *
-		((double)light_color.argb[0] / 255.0));
+		((float)light_color.argb[0] / 255.0));
 	return (color);
 }
 
-t_color		ft_scale_color(t_color color, double k)
+t_color		ft_scale_color(t_color color, float k)
 {
-	color.argb[2] = (t_byte)((double)(color.argb[2]) * k);
-	color.argb[1] = (t_byte)((double)(color.argb[1]) * k);
-	color.argb[0] = (t_byte)((double)(color.argb[0]) * k);
+	color.argb[2] = (t_byte)((float)(color.argb[2]) * k);
+	color.argb[1] = (t_byte)((float)(color.argb[1]) * k);
+	color.argb[0] = (t_byte)((float)(color.argb[0]) * k);
 	return (color);
 }
 

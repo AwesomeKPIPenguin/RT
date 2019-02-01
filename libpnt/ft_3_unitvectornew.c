@@ -17,5 +17,5 @@ t_point3		ft_3_unitvectornew(t_point3 origin, t_point3 direct)
 	t_point3	vec;
 
 	vec = ft_3_vectornew(origin, direct);
-	return (ft_3_vector_scale(vec, 1.0 / ft_3_vector_len(vec)));
+	return (ft_3_vector_scale(vec, 1.0f / ft_3_vector_len(vec)));
 }

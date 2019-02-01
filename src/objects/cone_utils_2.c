@@ -21,18 +21,18 @@ void		ft_set_coll_pnts_null(t_point3 *pnt1, t_point3 *pnt2)
 void		ft_get_coll_pnts_cyl(t_cone *cone, t_point3 (*pnt)[4])
 {
 	t_point3	a;
-	double		s;
-	double		dist;
+	float		s;
+	float		dist;
 
 	a = ft_3_line_line_inter((*pnt)[0], (*pnt)[1], cone->base, cone->bv);
 	if ((dist = ft_3_line_point_dist(cone->base, cone->bv, a)) >
 		cone->base_rad ||
 		ft_3_vector_cos((*pnt)[1], ft_3_vectornew((*pnt)[0], a)) < 0)
 		return (ft_set_coll_pnts_null(&((*pnt)[0]), &((*pnt)[1])));
-	s = cone->base_rad * sqrt(1 - pow(dist / cone->base_rad, 2)) /
-		sqrt(1 - pow(ft_3_vector_cos(cone->bv, (*pnt)[1]), 2));
-	(*pnt)[0] = ft_3_add_vector(a, ft_3_vector_scale((*pnt)[1], -s));
-	(*pnt)[1] = ft_3_add_vector(a, ft_3_vector_scale((*pnt)[1], s));
+	s = (float)(cone->base_rad * sqrt(1 - pow(dist / cone->base_rad, 2)) /
+		sqrt(1 - pow(ft_3_vector_cos(cone->bv, (*pnt)[1]), 2)));
+	(*pnt)[0] = ft_3_vector_add(a, ft_3_vector_scale((*pnt)[1], -s));
+	(*pnt)[1] = ft_3_vector_add(a, ft_3_vector_scale((*pnt)[1], s));
 }
 
 void		ft_is_between_planes
@@ -69,8 +69,8 @@ void		ft_collide_cone_planes
 
 t_point3	ft_get_closest(t_point3 cam, t_point3 pnt[4])
 {
-	double		dist;
-	double		tmp;
+	float		dist;
+	float		tmp;
 	t_point3	res;
 	int			i;
 

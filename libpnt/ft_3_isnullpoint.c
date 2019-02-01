@@ -14,5 +14,5 @@
 
 int			ft_3_isnullpoint(t_point3 point)
 {
-	return (point.x == DBL_MIN && point.y == DBL_MIN && point.z == DBL_MIN);
+	return (point.x == FLT_MIN && point.y == FLT_MIN && point.z == FLT_MIN);
 }

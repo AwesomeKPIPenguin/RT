@@ -25,23 +25,25 @@
 # include "libpnt.h"
 # include "mlx.h"
 
-# define WIN_WIDTH		1200.0
-# define WIN_HEIGHT		700.0
+# define WIN_WIDTH		1200.0f
+# define WIN_HEIGHT		700.0f
 
 # define CLOSE_MASK		0L
 # define CLOSE_NOTIFY	17
 
-# define FOV_MIN		60.0
-# define FOV_MAX		120.0
+# define FOV_MIN		60.0f
+# define FOV_MAX		120.0f
 
-# define BRIGHT_UNIT	20000.0
+# define BRIGHT_UNIT	20000.0f
 
 # define DEPTH			10
+
+# define DEFAULT_REFR	1.0f
 
 # define THREADS		8
 
 # define KOEF			0
-# define DBL			1
+# define FLT			1
 # define STR			2
 # define PNT			3
 # define COLOR			4
@@ -60,6 +62,8 @@
 # define C              0X08
 
 typedef uint8_t			t_byte;
+
+struct					s_object;
 
 typedef union			u_color
 {
@@ -89,18 +93,18 @@ typedef struct			s_light
 {
 	t_ltype				type;
 	t_color				color;
-	double				bright;
+	float				bright;
 	t_point3			origin;
 	t_point3			direct;
 }						t_light;
 
 typedef struct			s_camera
 {
-	double				alpha;
-	double				beta;
-	double				gamma;
-	double				fov;
-	double				start_refr;
+	float				alpha;
+	float				beta;
+	float				gamma;
+	float				fov;
+	float				start_refr;
 	t_point3			origin;
 	t_point3			direct;
 	t_point3			vs_start_point;
@@ -109,12 +113,24 @@ typedef struct			s_camera
 	t_point3			vs_y_step_vec;
 }						t_camera;
 
+/*
+**	Ray Hit History Node (as a float linked list)
+*/
+
+typedef struct			s_rhhn
+{
+	struct s_object		*o;
+	struct s_rhhn		*prev;
+	struct s_rhhn		*next;
+}						t_rhhn;
+
 typedef struct			s_scene
 {
 	t_color				bg_color;
 	char				*name;
 	t_list				*lights;
 	t_list				*objs;
+	t_rhhn				*(rhhns[THREADS]);
 	t_camera			*cam;
 }						t_scene;
 
@@ -139,14 +155,14 @@ typedef struct			s_parg
 typedef struct			s_object
 {
 	t_color				color;
-	double				ambnt;
-	double				diff;
-	double				spclr;
-	double				s_blur;
-	double				refr;
-	double				trans;
-	double				t_blur;
-	double				phong;
+	float				ambnt;
+	float				diff;
+	float				spclr;
+	float				s_blur;
+	float				refr;
+	float				trans;
+	float				t_blur;
+	float				phong;
 
 /*
 **	figure, one of the objects, listed bellow
@@ -171,16 +187,16 @@ typedef struct			s_plane
 
 typedef struct			s_sphere
 {
-	double				radius;
+	float				radius;
 	t_point3			origin;
 }						t_sphere;
 
 typedef struct			s_cone
 {
-	double				base_rad;
-	double				vert_rad;
-	double				bv_dist;
-	double				side_norm_angle;
+	float				base_rad;
+	float				vert_rad;
+	float				bv_dist;
+	float				side_norm_angle;
 	t_point3			base;
 	t_point3			vert;
 	t_point3			bv;
@@ -195,13 +211,21 @@ typedef struct			s_collision
 {
 	t_color				illum_color;
 	t_color				phong_color;
-	double				phong;
+	float				phong;
 	t_object			*o;
 	t_point3			coll_pnt;
 	t_point3			norm;
 	t_point3			spclr_vec;
 	t_point3			trans_vec;
 }						t_coll;
+
+/*
+**	rhhn.c
+*/
+
+t_rhhn					*ft_rhhn_list_new(int length);
+void					ft_rhhn_hit
+							(t_rhhn *head, t_object *o, float (*refr)[2]);
 
 /*
 **	scene.c
@@ -338,7 +362,7 @@ t_point3				ft_get_closest(t_point3 cam, t_point3 pnt[4]);
 
 t_color					ft_throw_rays
 							(t_parg *parg, t_coll coll, t_point3 *vec,
-							double num[2]);
+							float num[2]);
 t_color					ft_trace_ray(t_parg *parg, int x, int y);
 
 /*
@@ -346,7 +370,7 @@ t_color					ft_trace_ray(t_parg *parg, int x, int y);
 */
 
 t_point3				ft_change_blur_vec
-							(t_point3 norm, t_point3 vec, double angle);
+							(t_point3 norm, t_point3 vec, float angle);
 t_point3				ft_get_blur_proj(t_point3 origin, t_point3 norm);
 t_color					ft_sum_colors
 							(t_coll coll, t_color color_s, t_color color_t);
@@ -362,16 +386,15 @@ void					ft_illuminate(t_parg *parg, t_coll *coll);
 */
 
 t_coll					ft_get_collision
-							(t_parg *parg, t_point3 origin,
-							t_point3 direct, double refr);
+							(t_parg *parg, t_point3 origin, t_point3 direct);
 
 /*
 **	utils.c
 */
 
 t_color					ft_apply_phong
-							(t_color color, double bright, t_color light_color);
-t_color					ft_scale_color(t_color color, double k);
+							(t_color color, float bright, t_color light_color);
+t_color					ft_scale_color(t_color color, float k);
 t_color					ft_add_colors(t_color c1, t_color c2);
 
 /*

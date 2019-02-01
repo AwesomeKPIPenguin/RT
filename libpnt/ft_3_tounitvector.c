@@ -14,7 +14,7 @@
 
 t_point3		ft_3_tounitvector(t_point3 vec)
 {
-	double	len;
+	float	len;
 
 	len = ft_3_vector_len(vec);
 	return (ft_3_pointnew(vec.x / len, vec.y / len, vec.z / len));

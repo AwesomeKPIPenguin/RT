@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_3_project_vector.c                              :+:      :+:    :+:   */
+/*   ft_3_vector_project.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: domelche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,8 +12,10 @@
 
 #include "libpnt.h"
 
-t_point3		ft_3_project_vector(t_point3 norm, t_point3 vec)
+t_point3		ft_3_vector_project(t_point3 norm, t_point3 vec)
 {
-	return (ft_3_add_vector(vec, ft_3_vector_scale(norm, (ft_3_vector_len(vec) *
-		-ft_3_vector_cos(norm, vec)) / ft_3_vector_len(norm))));
+	return (ft_3_vector_add(
+			vec, ft_3_vector_scale(
+				norm, (ft_3_vector_len(vec) * -ft_3_vector_cos(norm, vec)) /
+					ft_3_vector_len(norm))));
 }

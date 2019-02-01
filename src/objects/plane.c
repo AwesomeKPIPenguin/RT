@@ -41,9 +41,11 @@ char		*ft_parse_plane(char *attr, t_scene *scn)
 	if (ft_3_vector_len(pln->norm) == 0.0)
 		pln->norm = ft_3_pointnew(0.0, 1.0, 0.0);
 	pln->norm = ft_3_tounitvector(pln->norm);
-	pln->norm = ft_3_tounitvector(ft_3_rotate_vector(pln->norm,
-		obj->rotate.x, obj->rotate.y, obj->rotate.z));
-	pln->origin = ft_3_add_vector(pln->origin, obj->translate);
+	pln->norm = ft_3_tounitvector(ft_3_vector_rotate(pln->norm,
+													 obj->rotate.x,
+													 obj->rotate.y,
+													 obj->rotate.z));
+	pln->origin = ft_3_vector_add(pln->origin, obj->translate);
 	obj->fig = pln;
 	ft_lstpush(&(scn->objs), ft_nodenew((void *)obj, sizeof(obj)));
 	return (ft_get_curve(attr, '}'));

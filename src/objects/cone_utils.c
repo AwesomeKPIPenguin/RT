@@ -28,17 +28,17 @@ t_point3	ft_collide_cone(void *fig, t_point3 origin, t_point3 direct)
 
 void		ft_get_coll_pnts(t_cone *cone, t_point3 (*pnt)[4], int is_cyl)
 {
-	double		cos_t_2;
+	float		cos_t_2;
 	t_point3	v_co[2];
-	double		dv_dot;
-	double		cov_dot;
-	double		res[3];
+	float		dv_dot;
+	float		cov_dot;
+	float		res[3];
 
 	if (is_cyl)
 		return (ft_get_coll_pnts_cyl(cone, pnt));
 	v_co[0] = ft_3_vector_scale(cone->bv, -1.0);
-	cos_t_2 = pow(cone->bv_dist / sqrt(pow(cone->base_rad - cone->vert_rad, 2) +
-		pow(cone->bv_dist, 2)), 2);
+	cos_t_2 = (float)pow(cone->bv_dist / sqrt(
+		pow(cone->base_rad - cone->vert_rad, 2) + pow(cone->bv_dist, 2)), 2);
 	v_co[1] = ft_3_vectornew(cone->main_vert, (*pnt)[0]);
 	dv_dot = ft_3_vector_dot((*pnt)[1], v_co[0]);
 	cov_dot = ft_3_vector_dot(v_co[1], v_co[0]);
@@ -49,9 +49,9 @@ void		ft_get_coll_pnts(t_cone *cone, t_point3 (*pnt)[4], int is_cyl)
 		return (ft_set_coll_pnts_null(&((*pnt)[0]), &((*pnt)[1])));
 	v_co[0] = (*pnt)[0];
 	(*pnt)[0] = (res[1] < 0.0) ? ft_3_nullpointnew() :
-		ft_3_add_vector(v_co[0], ft_3_vector_scale((*pnt)[1], res[1]));
+				ft_3_vector_add(v_co[0], ft_3_vector_scale((*pnt)[1], res[1]));
 	(*pnt)[1] = (res[2] < 0.0) ? ft_3_nullpointnew() :
-		ft_3_add_vector(v_co[0], ft_3_vector_scale((*pnt)[1], res[2]));
+				ft_3_vector_add(v_co[0], ft_3_vector_scale((*pnt)[1], res[2]));
 }
 
 int			ft_is_inside_cone(void *fig, t_point3 point)
@@ -60,7 +60,7 @@ int			ft_is_inside_cone(void *fig, t_point3 point)
 	t_point3	bv;
 	t_point3	vb;
 	t_point3	proj;
-	double		rad;
+	float		rad;
 
 	cone = (t_cone *)fig;
 	bv = ft_3_vectornew(cone->base, cone->vert);
@@ -79,7 +79,7 @@ t_point3	ft_get_norm_cone(void *fig, t_point3 coll)
 {
 	t_cone		*cone;
 	t_point3	proj;
-	double		sign;
+	float		sign;
 
 	cone = (t_cone *)fig;
 	proj = ft_3_line_point_proj(cone->base, cone->bv, coll);
@@ -89,10 +89,10 @@ t_point3	ft_get_norm_cone(void *fig, t_point3 coll)
 		return (cone->bv);
 	if (cone->base_rad == cone->vert_rad)
 		return (ft_3_unitvectornew(proj, coll));
-	sign = (cone->base_rad > cone->vert_rad) ? 1.0 : -1.0;
+	sign = (cone->base_rad > cone->vert_rad) ? 1.0f : -1.0f;
 	sign *= (ft_3_vector_cos(ft_3_vectornew(cone->main_vert, cone->base),
-		ft_3_vectornew(cone->main_vert, proj)) < 0) ? -1.0 : 1.0;
-	return (ft_3_tounitvector(ft_3_turn_vector(cone->bv,
+		ft_3_vectornew(cone->main_vert, proj)) < 0) ? -1.0f : 1.0f;
+	return (ft_3_tounitvector(ft_3_vector_turn(cone->bv,
 		ft_3_unitvectornew(proj, coll), sign * cone->side_norm_angle)));
 }
 

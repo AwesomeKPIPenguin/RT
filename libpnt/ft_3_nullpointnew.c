@@ -14,5 +14,5 @@
 
 t_point3	ft_3_nullpointnew(void)
 {
-	return (ft_3_pointnew(DBL_MIN, DBL_MIN, DBL_MIN));
+	return (ft_3_pointnew(FLT_MIN, FLT_MIN, FLT_MIN));
 }

@@ -27,7 +27,7 @@ t_object	*ft_objectnew(void)
 
 static void	ft_balance_koefs(t_object *o)
 {
-	double	sum;
+	float	sum;
 
 	sum = o->diff + o->trans + o->spclr;
 	if (sum > 1.0)

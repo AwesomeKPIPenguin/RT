@@ -12,7 +12,7 @@
 
 #include "libpnt.h"
 
-t_point3	ft_3_pointnew(double x, double y, double z)
+t_point3	ft_3_pointnew(float x, float y, float z)
 {
 	t_point3	point;
 

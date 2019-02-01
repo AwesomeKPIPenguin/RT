@@ -28,15 +28,15 @@ void		ft_cone_init(t_object *obj, t_cone *cone)
 {
 	obj->fig = cone;
 	cone->bv_dist = ft_3_point_point_dist(cone->base, cone->vert);
-	cone->base = ft_3_add_vector(cone->base, obj->translate);
-	cone->vert = ft_3_add_vector(cone->vert, obj->translate);
-	cone->bv = ft_3_rotate_vector(ft_3_unitvectornew(cone->base, cone->vert),
+	cone->base = ft_3_vector_add(cone->base, obj->translate);
+	cone->vert = ft_3_vector_add(cone->vert, obj->translate);
+	cone->bv = ft_3_vector_rotate(ft_3_unitvectornew(cone->base, cone->vert),
 		obj->rotate.x, obj->rotate.y, obj->rotate.z);
-	cone->vert = ft_3_add_vector(cone->base,
+	cone->vert = ft_3_vector_add(cone->base,
 		ft_3_vector_scale(cone->bv, cone->bv_dist));
 	cone->side_norm_angle = acos((cone->bv_dist * sin(atan((cone->base_rad -
 		cone->vert_rad) / cone->bv_dist))) / (cone->base_rad - cone->vert_rad));
-	cone->main_vert = ft_3_add_vector(cone->base, ft_3_vector_scale(cone->bv,
+	cone->main_vert = ft_3_vector_add(cone->base, ft_3_vector_scale(cone->bv,
 		cone->base_rad * cone->bv_dist / (cone->base_rad - cone->vert_rad)));
 }
 
@@ -53,9 +53,9 @@ char		*ft_parse_cone(char *attr, t_scene *scn)
 	cone = ft_conenew();
 	attr = ft_get_curve(attr, '{');
 	ft_get_attr_in_scope(attr, "base:", (void *)(&(cone->base)), PNT);
-	ft_get_attr_in_scope(attr, "base_rad:", (void *)(&(cone->base_rad)), DBL);
+	ft_get_attr_in_scope(attr, "base_rad:", (void *)(&(cone->base_rad)), FLT);
 	ft_get_attr_in_scope(attr, "vert:", (void *)(&(cone->vert)), PNT);
-	ft_get_attr_in_scope(attr, "vert_rad:", (void *)(&(cone->vert_rad)), DBL);
+	ft_get_attr_in_scope(attr, "vert_rad:", (void *)(&(cone->vert_rad)), FLT);
 	if (cone->base_rad < 0 && cone->vert_rad < 0)
 	{
 		cone->base_rad *= -1.0;

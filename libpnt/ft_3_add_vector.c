@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_3_add_vector.c                                  :+:      :+:    :+:   */
+/*   ft_3_vector_add.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: domelche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "libpnt.h"
 
-t_point3		ft_3_add_vector(t_point3 vec_1, t_point3 vec_2)
+t_point3		ft_3_vector_add(t_point3 vec_1, t_point3 vec_2)
 {
 	vec_1.x += vec_2.x;
 	vec_1.y += vec_2.y;

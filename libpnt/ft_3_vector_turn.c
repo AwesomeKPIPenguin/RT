@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_3_turn_vector.c                                 :+:      :+:    :+:   */
+/*   ft_3_vector_turn.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: domelche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,9 +12,9 @@
 
 #include "libpnt.h"
 
-t_point3		ft_3_turn_vector(t_point3 proj, t_point3 norm, double angle)
+t_point3		ft_3_vector_turn(t_point3 proj, t_point3 norm, float angle)
 {
-	return (ft_3_add_vector(
-			ft_3_vector_scale(proj, sin(angle)),
-			ft_3_vector_scale(norm, cos(angle))));
+	return (ft_3_vector_add(
+		ft_3_vector_scale(proj, (float)sin(angle)),
+		ft_3_vector_scale(norm, (float)cos(angle))));
 }
