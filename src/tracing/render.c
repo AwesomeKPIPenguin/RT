@@ -45,7 +45,7 @@ void	ft_render(t_env *e)
 	t_parg		pargs[THREADS];
 	int			i;
 
-	ft_get_camera_refr();
+	ft_get_start_refr(e->scn);
 	i = -1;
 	while (++i < THREADS)
 	{

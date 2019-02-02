@@ -241,6 +241,7 @@ void					ft_parse_scene(char *attr, t_scene *scn);
 
 t_camera				*ft_cameranew(void);
 char					*ft_parse_camera(char *attr, t_scene *scn);
+void					ft_get_start_refr(t_scene *scn);
 
 /*
 **	image.c
