@@ -12,6 +12,10 @@
 
 #include "libpnt.h"
 
+/*
+**
+*/
+
 t_point3		ft_3_vector_turn(t_point3 proj, t_point3 norm, float angle)
 {
 	return (ft_3_vector_add(

@@ -12,10 +12,6 @@
 
 #include "libpnt.h"
 
-/*
-**	turn vec towards axis on angle
-*/
-
 t_point3		ft_3_vector_turn_near(t_point3 vec, t_point3 axis, float angle)
 {
 	t_point3	rotated;
@@ -23,6 +19,8 @@ t_point3		ft_3_vector_turn_near(t_point3 vec, t_point3 axis, float angle)
 	float		cos_a;
 	float		va;
 
+	if (angle == 0)
+		return (vec);
 	sin_a = (float)sin(angle);
 	cos_a = (float)cos(angle);
 	va = 1 - cos_a;

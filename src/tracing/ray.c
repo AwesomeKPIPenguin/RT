@@ -70,7 +70,7 @@ t_color			ft_throw_rays
 	t_color		color[2];
 	t_point3	od[2];
 
-	max_angle = ft_torad(num[0] * 10.0f);
+	max_angle = (float)ft_torad(num[0] * 10.0f);
 	rays = ft_limit(1, 10, (int)(sin(max_angle) * 10.0));
 	i = -1;
 	color[1].val = 0;
@@ -79,7 +79,7 @@ t_color			ft_throw_rays
 	{
 		od[0] = coll.coll_pnt;
 		od[1] = ft_3_vector_turn(ft_get_blur_proj(coll.coll_pnt, *vec),
-			*vec, (float) rand() / (float) RAND_MAX * max_angle);
+			*vec, (float)rand() / (float)RAND_MAX * max_angle);
 		color[0] = ft_throw_ray(parg, od, (int)(num[1] + 1));
 		color[1] = ft_add_blur_colors(color[1], i, color[0]);
 	}

@@ -168,6 +168,6 @@ char				*ft_readfile(char *file_name);
 
 double				ft_torad(double degrees);
 void				ft_solve_sqr
-						(double a, double b, double c, double (*res)[3]);
+						(float a, float b, float c, float (*res)[3]);
 
 #endif

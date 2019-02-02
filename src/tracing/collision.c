@@ -47,7 +47,7 @@ t_coll				ft_get_collision
 	float		refr[2];
 
 	coll.o = NULL;
-	od[0] = ft_3_vector_add(origin, direct);
+	od[0] = ft_3_vector_add(origin, ft_3_vector_scale(direct, 0.1f));
 	od[1] = direct;
 	if (ft_3_isnullpoint(coll.coll_pnt =
 		ft_get_collision_point(parg->e->scn->objs, &(coll.o), od)))

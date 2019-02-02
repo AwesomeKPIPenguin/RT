@@ -23,7 +23,7 @@
 # include <time.h>
 # include "libft.h"
 # include "libpnt.h"
-# include "mlx.h"
+//# include "mlx.h"
 
 # define WIN_WIDTH		1200.0f
 # define WIN_HEIGHT		700.0f

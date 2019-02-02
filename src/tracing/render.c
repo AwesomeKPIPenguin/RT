@@ -43,21 +43,21 @@ void	ft_render(t_env *e)
 {
 	pthread_t	threads[THREADS];
 	t_parg		pargs[THREADS];
-	int			i;
+	int			i = 6;
 
 	ft_get_start_refr(e->scn);
-	i = -1;
-	while (++i < THREADS)
-	{
+//	i = -1;
+//	while (++i < THREADS)
+//	{
 		pargs[i].section = i;
 		pargs[i].e = e;
-	}
-	i = -1;
-	while (++i < THREADS)
+//	}
+//	i = -1;
+//	while (++i < THREADS)
 		pthread_create(&threads[i], NULL,
 			ft_section_handle, (void *)&pargs[i]);
-	i = -1;
-	while (++i < THREADS)
+//	i = -1;
+//	while (++i < THREADS)
 		pthread_join(threads[i], NULL);
-	mlx_put_image_to_window(e->mlx, e->win, e->img->ptr, 0, 0);
+//	mlx_put_image_to_window(e->mlx, e->win, e->img->ptr, 0, 0);
 }

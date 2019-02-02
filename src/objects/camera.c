@@ -88,14 +88,15 @@ void				ft_get_start_refr(t_scene *scn)
 		o = (t_object *)(node->content);
 		if (o->ft_is_inside(o->fig, scn->cam->origin))
 		{
-			ft_lstpush(&objs, ft_lstnew((void *)o, sizeof(o)));
+			ft_lstpush(&objs, ft_nodenew((void *)o, sizeof(o)));
 			++len;
 		}
 		node = node->next;
 	}
 	if (len == 0)
 		return ;
-	if (len == 1)
+	else if (len == 1)
 		ft_add_start_object(scn, (t_object *)(objs->content));
-	ft_add_start_object(scn, ft_get_inner_object(objs, scn->cam->origin));
+	else
+		ft_add_start_object(scn, ft_get_inner_object(objs, scn->cam->origin));
 }
