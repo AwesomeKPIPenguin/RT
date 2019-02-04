@@ -3,6 +3,8 @@
 
 t_rhhn			*ft_rhhn_list_new(int length)
 {
+	write(1, "in ft_rhhn_list_new\n", 21);
+
 	t_rhhn	*head;
 	t_rhhn	*prev;
 	t_rhhn	*node;

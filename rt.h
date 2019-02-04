@@ -23,7 +23,7 @@
 # include <time.h>
 # include "libft.h"
 # include "libpnt.h"
-//# include "mlx.h"
+# include "mlx.h"
 
 # define WIN_WIDTH		1200.0f
 # define WIN_HEIGHT		700.0f
@@ -36,7 +36,7 @@
 
 # define BRIGHT_UNIT	20000.0f
 
-# define DEPTH			10
+# define DEPTH			2
 
 # define DEFAULT_REFR	1.0f
 

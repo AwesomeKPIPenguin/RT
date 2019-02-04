@@ -57,10 +57,12 @@ t_coll				ft_get_collision
 		coll.norm = ft_3_vector_scale(coll.norm, -1);
 	if (coll.o->spclr)
 		coll.spclr_vec = ft_3_vector_reflect(origin, coll.coll_pnt, coll.norm);
-	ft_rhhn_hit(parg->e->scn->rhhns[parg->section], coll.o, &refr);
 	if (coll.o->trans)
+	{
+		ft_rhhn_hit(parg->e->scn->rhhns[parg->section], coll.o, &refr);
 		coll.trans_vec =
 			ft_3_vector_refract(coll.norm, direct, refr[0], refr[1]);
+	}
 	ft_illuminate(parg, &coll);
 	return (coll);
 }

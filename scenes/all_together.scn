@@ -37,7 +37,7 @@ plane {
     norm: (0, 1, 0);
     color: 0x808080;
     spclr: 1;
-	s_blur: 0.3;
+#	s_blur: 0.3;
 }
 
 cone {
@@ -75,8 +75,8 @@ cone {
     vert_rad: 100;
     color: 0xffff00;
 
-    rotate: (0, -60, 0);
-    translate: (-200, 0, -300);
+#    rotate: (0, -60, 0);
+#    translate: (-200, 0, -300);
 }
 
 sphere {
